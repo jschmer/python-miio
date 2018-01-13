@@ -6,6 +6,8 @@ import ast
 import sys
 import json
 import ipaddress
+import tempfile
+import os
 from pprint import pformat as pf
 from typing import Any  # noqa: F401
 
@@ -45,7 +47,7 @@ def validate_token(ctx, param, value):
 @click.option('--token', envvar="MIROBO_TOKEN", callback=validate_token)
 @click.option('-d', '--debug', default=False, count=True)
 @click.option('--id-file', type=click.Path(dir_okay=False, writable=True),
-              default='/tmp/python-mirobo.seq')
+              default=os.path.join(tempfile.gettempdir(), 'python-mirobo.seq'))
 @click.version_option()
 @click.pass_context
 def cli(ctx, ip: str, token: str, debug: int, id_file: str):
